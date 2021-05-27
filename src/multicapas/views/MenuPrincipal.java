@@ -1,22 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package multicapas.views;
 
-/**
- *
- * @author le_le
- */
 public class MenuPrincipal extends javax.swing.JDialog {
 
-    /**
-     * Creates new form MenuPrincipal
-     */
-    public MenuPrincipal(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public MenuPrincipal() {
         initComponents();
+        setLocationRelativeTo(null);
+        setTitle("Menu Principal");
     }
 
     /**
@@ -31,18 +20,23 @@ public class MenuPrincipal extends javax.swing.JDialog {
         jMenuBar1 = new javax.swing.JMenuBar();
         menuCliente = new javax.swing.JMenu();
         menuFornecedor = new javax.swing.JMenu();
-        menuOrcamento = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         menuCliente.setText("Cliente");
+        menuCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuClienteMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(menuCliente);
 
         menuFornecedor.setText("Fornecedor");
         jMenuBar1.add(menuFornecedor);
 
-        menuOrcamento.setText("Orçamento");
-        jMenuBar1.add(menuOrcamento);
+        jMenu3.setText("Orçamento");
+        jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
 
@@ -54,11 +48,16 @@ public class MenuPrincipal extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 307, Short.MAX_VALUE)
+            .addGap(0, 328, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void menuClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuClienteMouseClicked
+        ClientePanel clientePanel = new ClientePanel();
+        clientePanel.setVisible(true);
+    }//GEN-LAST:event_menuClienteMouseClicked
 
     /**
      * @param args the command line arguments
@@ -90,7 +89,7 @@ public class MenuPrincipal extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                MenuPrincipal dialog = new MenuPrincipal(new javax.swing.JFrame(), true);
+                MenuPrincipal dialog = new MenuPrincipal();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -103,9 +102,9 @@ public class MenuPrincipal extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu menuCliente;
     private javax.swing.JMenu menuFornecedor;
-    private javax.swing.JMenu menuOrcamento;
     // End of variables declaration//GEN-END:variables
 }
