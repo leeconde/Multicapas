@@ -20,7 +20,6 @@ public class MenuPrincipal extends javax.swing.JDialog {
         jMenuBar1 = new javax.swing.JMenuBar();
         menuCliente = new javax.swing.JMenu();
         menuFornecedor = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -35,9 +34,6 @@ public class MenuPrincipal extends javax.swing.JDialog {
         menuFornecedor.setText("Fornecedor");
         jMenuBar1.add(menuFornecedor);
 
-        jMenu3.setText("Orçamento");
-        jMenuBar1.add(jMenu3);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -48,7 +44,7 @@ public class MenuPrincipal extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 328, Short.MAX_VALUE)
+            .addGap(0, 307, Short.MAX_VALUE)
         );
 
         pack();
@@ -102,7 +98,6 @@ public class MenuPrincipal extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu menuCliente;
     private javax.swing.JMenu menuFornecedor;
