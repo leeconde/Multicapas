@@ -1,5 +1,8 @@
 package multicapas.views;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import multicapas.dao.ClienteDao;
 import multicapas.entities.Cliente;
@@ -11,6 +14,37 @@ public class ClientePanel extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setTitle("Clientes");
         popularTabela();
+        configurarBotoes();
+    }
+
+    private void configurarBotoes() {
+        buttonFechar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+
+        buttonIncluir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    ClienteForm clienteForm = new ClienteForm();
+                    clienteForm.setVisible(true);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Erro ao tentar incluir um cliente. Contate o Desenvolvedor.");
+                }
+                popularTabela();
+            }
+        });
+
+        buttonAtualizar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                popularTabela();
+            }
+        });
     }
 
     public void popularTabela() {
@@ -39,6 +73,8 @@ public class ClientePanel extends javax.swing.JFrame {
         buttonIncluir = new javax.swing.JButton();
         buttonEditar = new javax.swing.JButton();
         buttonExcluir = new javax.swing.JButton();
+        buttonFechar = new javax.swing.JButton();
+        buttonAtualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,6 +102,10 @@ public class ClientePanel extends javax.swing.JFrame {
 
         buttonExcluir.setText("Excluir");
 
+        buttonFechar.setText("Fechar");
+
+        buttonAtualizar.setText("Atualizar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -81,13 +121,19 @@ public class ClientePanel extends javax.swing.JFrame {
                         .addComponent(buttonEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonExcluir)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttonFechar))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(buttonAtualizar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(53, Short.MAX_VALUE)
+                .addContainerGap(24, Short.MAX_VALUE)
+                .addComponent(buttonAtualizar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -95,7 +141,8 @@ public class ClientePanel extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonIncluir)
                     .addComponent(buttonEditar)
-                    .addComponent(buttonExcluir))
+                    .addComponent(buttonExcluir)
+                    .addComponent(buttonFechar))
                 .addContainerGap())
         );
 
@@ -139,8 +186,10 @@ public class ClientePanel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonAtualizar;
     private javax.swing.JButton buttonEditar;
     private javax.swing.JButton buttonExcluir;
+    private javax.swing.JButton buttonFechar;
     private javax.swing.JButton buttonIncluir;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
