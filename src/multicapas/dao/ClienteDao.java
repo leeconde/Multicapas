@@ -38,6 +38,10 @@ public class ClienteDao {
                 .getResultList();
     }
 
+    public Cliente findById(int id) {
+        return entityManager.find(Cliente.class, id);
+    }
+
     public void create(Cliente cliente) {
         try {
             entityManager.getTransaction().begin();
@@ -63,6 +67,20 @@ public class ClienteDao {
             entityManager.getTransaction().rollback();
             JOptionPane.showMessageDialog(null,
                     "Erro ao remover cliente na base de dados. "
+                    + "Contate o Desenvolvedor.");
+        }
+    }
+
+    public void merge(Cliente cliente) {
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(cliente);
+            entityManager.getTransaction().commit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            entityManager.getTransaction().rollback();
+            JOptionPane.showMessageDialog(null,
+                    "Erro ao editar cliente no banco de dados. "
                     + "Contate o Desenvolvedor.");
         }
     }

@@ -2,12 +2,16 @@ package multicapas.views;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import multicapas.dao.ClienteDao;
 import multicapas.entities.Cliente;
 
 public class ClientePanel extends javax.swing.JFrame {
+
+    private ClienteForm clienteForm;
 
     public ClientePanel() {
         initComponents();
@@ -29,13 +33,36 @@ public class ClientePanel extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    ClienteForm clienteForm = new ClienteForm();
+                    clienteForm = new ClienteForm();
+                    clienteForm.operacaoCriacao(true);
                     clienteForm.setVisible(true);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null,
                             "Erro ao tentar incluir um cliente. "
                             + "Contate o Desenvolvedor.");
+                }
+            }
+        });
+
+        buttonEditar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clienteForm = new ClienteForm();
+                clienteForm.operacaoCriacao(false);
+                int linhaSelecionada = tableClientes.getSelectedRow();
+                if (linhaSelecionada != -1) {
+                    try {
+                        Object obj = tableClientes.getModel()
+                                .getValueAt(linhaSelecionada, 0);
+                        int id = Integer.parseInt(obj.toString());
+                        if (clienteForm.edicao(id)) {
+                            popularTabela();
+                        }
+                    } catch (Exception ex) {
+                        Logger.getLogger(ClientePanel.class.getName())
+                                .log(Level.SEVERE, null, ex);
+                    }
                 }
                 popularTabela();
             }

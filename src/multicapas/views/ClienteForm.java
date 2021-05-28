@@ -9,6 +9,10 @@ public class ClienteForm extends javax.swing.JFrame {
 
     private Cliente cliente;
 
+    private boolean modoCriacao;
+
+    private boolean registroEditado;
+
     public ClienteForm() {
         initComponents();
         setLocationRelativeTo(null);
@@ -130,18 +134,39 @@ public class ClienteForm extends javax.swing.JFrame {
         buttonSalvar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String nomeLoja = txtNomeLoja.getText();
-                String cidade = txtCidade.getText();
-                String endereco = txtEndereco.getText();
-                String telefone = txtNomeResponsavel.getText();
-                String nomeResponsavel = txtNomeResponsavel.getText();
-                String email = txtEmail.getText();
-                cliente = new Cliente(nomeLoja, cidade, endereco, telefone,
-                        nomeResponsavel, email);
-                ClienteDao.getInstance().create(cliente);
-                dispose();
+                if (modoCriacao == true) {
+                    String nomeLoja = txtNomeLoja.getText();
+                    String cidade = txtCidade.getText();
+                    String endereco = txtEndereco.getText();
+                    String telefone = txtNomeResponsavel.getText();
+                    String nomeResponsavel = txtNomeResponsavel.getText();
+                    String email = txtEmail.getText();
+                    cliente = new Cliente(nomeLoja, cidade, endereco, telefone,
+                            nomeResponsavel, email);
+                    ClienteDao.getInstance().create(cliente);
+                    dispose();
+                } else if (modoCriacao == false) {
+                    cliente.setNomeLoja(txtNomeLoja.getText());
+                    cliente.setCidade(txtCidade.getText());
+                    cliente.setEndereço(txtEndereco.getText());
+                    cliente.setTelefone(txtTelefone.getText());
+                    cliente.setNomeResponsavel(txtNomeResponsavel.getText());
+                    cliente.setEmail(txtEmail.getText());
+                    ClienteDao.getInstance().merge(cliente);
+                    registroEditado = true;
+                    dispose();
+                }
+
             }
         });
+    }
+
+    public void operacaoCriacao(boolean modoCriacao) {
+        if (modoCriacao) {
+            this.modoCriacao = true;
+        } else if (!modoCriacao) {
+            this.modoCriacao = false;
+        }
     }
 
     /**
@@ -195,4 +220,18 @@ public class ClienteForm extends javax.swing.JFrame {
     private javax.swing.JTextField txtNomeResponsavel;
     private javax.swing.JTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
+
+    public boolean edicao(int id) {
+        cliente = ClienteDao.getInstance().findById(id);
+        txtNomeLoja.setText(cliente.getNomeLoja());
+        txtCidade.setText(cliente.getCidade());
+        txtEndereco.setText(cliente.getEndereço());
+        txtTelefone.setText(cliente.getTelefone());
+        txtNomeResponsavel.setText(cliente.getNomeResponsavel());
+        txtEmail.setText(cliente.getEmail());
+
+        setVisible(true);
+
+        return registroEditado;
+    }
 }
