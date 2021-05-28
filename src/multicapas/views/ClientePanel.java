@@ -33,7 +33,31 @@ public class ClientePanel extends javax.swing.JFrame {
                     clienteForm.setVisible(true);
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "Erro ao tentar incluir um cliente. Contate o Desenvolvedor.");
+                    JOptionPane.showMessageDialog(null,
+                            "Erro ao tentar incluir um cliente. "
+                            + "Contate o Desenvolvedor.");
+                }
+                popularTabela();
+            }
+        });
+
+        buttonExcluir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int linhaSelecionada = tableClientes.getSelectedRow();
+                if (linhaSelecionada != -1) {
+                    int confirmacao = JOptionPane.showConfirmDialog(null,
+                            "Deseja excluir o cliente selecionado?",
+                            "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
+
+                    if (confirmacao == 0) {
+                        Object obj = tableClientes.getModel()
+                                .getValueAt(linhaSelecionada, 0);
+                        int objConvertido = Integer.parseInt(obj.toString());
+                        ClienteDao.getInstance().remove(objConvertido);
+                        ((DefaultTableModel) tableClientes.getModel())
+                                .removeRow(tableClientes.getSelectedRow());
+                    }
                 }
                 popularTabela();
             }
@@ -53,6 +77,7 @@ public class ClientePanel extends javax.swing.JFrame {
 
         for (Cliente c : ClienteDao.getInstance().findAll()) {
             model.addRow(new Object[]{
+                c.getId(),
                 c.getNomeLoja(),
                 c.getCidade(),
                 c.getEndereço(),
@@ -83,11 +108,11 @@ public class ClientePanel extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nome Loja", "Cidade", "Endereço", "Telefone", "Nome Responsável", "E-mail"
+                "Código", "Nome Loja", "Cidade", "Endereço", "Telefone", "Nome Responsável", "E-mail"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true, true
+                false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

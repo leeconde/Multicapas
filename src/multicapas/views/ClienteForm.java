@@ -136,7 +136,8 @@ public class ClienteForm extends javax.swing.JFrame {
                 String telefone = txtNomeResponsavel.getText();
                 String nomeResponsavel = txtNomeResponsavel.getText();
                 String email = txtEmail.getText();
-                cliente = new Cliente(nomeLoja, cidade, endereco, telefone, nomeResponsavel, email);
+                cliente = new Cliente(nomeLoja, cidade, endereco, telefone,
+                        nomeResponsavel, email);
                 ClienteDao.getInstance().create(cliente);
                 dispose();
             }

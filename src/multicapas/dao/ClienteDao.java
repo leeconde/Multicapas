@@ -25,18 +25,20 @@ public class ClienteDao {
     }
 
     private EntityManager getEntityManager() {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("Multicapas");
+        EntityManagerFactory factory
+                = Persistence.createEntityManagerFactory("Multicapas");
         if (entityManager == null) {
             entityManager = factory.createEntityManager();
         }
         return entityManager;
     }
-    
-    public List<Cliente> findAll(){
-        return entityManager.createQuery("FROM " + Cliente.class.getName()).getResultList();
+
+    public List<Cliente> findAll() {
+        return entityManager.createQuery("FROM " + Cliente.class.getName())
+                .getResultList();
     }
-    
-    public void create(Cliente cliente){
+
+    public void create(Cliente cliente) {
         try {
             entityManager.getTransaction().begin();
             entityManager.persist(cliente);
@@ -44,7 +46,24 @@ public class ClienteDao {
         } catch (Exception ex) {
             ex.printStackTrace();
             entityManager.getTransaction().rollback();
-            JOptionPane.showMessageDialog(null, "Erro ao incluir um cliente. Contate o Desenvolvedor.");
+            JOptionPane.showMessageDialog(null,
+                    "Erro ao incluir um cliente na base de dados. "
+                    + "Contate o Desenvolvedor.");
+        }
+    }
+
+    public void remove(int id) {
+        try {
+            entityManager.getTransaction().begin();
+            Cliente cliente = entityManager.find(Cliente.class, id);
+            entityManager.remove(cliente);
+            entityManager.getTransaction().commit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            entityManager.getTransaction().rollback();
+            JOptionPane.showMessageDialog(null,
+                    "Erro ao remover cliente na base de dados. "
+                    + "Contate o Desenvolvedor.");
         }
     }
 }
